@@ -71,8 +71,21 @@ export default function Menu() {
             <div className="menu-grid">
               {filtered.map(item => (
                 <div className="menu-item-card card" key={item.id}>
-                  <div className="menu-item-card__left">
-                    <span className="menu-item-card__emoji">{getCategoryEmoji(item.category)}</span>
+                  <div className="menu-item-card__img-wrap">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="menu-item-card__img"
+                        onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }}
+                      />
+                    ) : null}
+                    <span
+                      className="menu-item-card__emoji"
+                      style={item.image_url ? { display: 'none' } : {}}
+                    >
+                      {getCategoryEmoji(item.category)}
+                    </span>
                   </div>
                   <div className="menu-item-card__body">
                     <div className="menu-item-card__top">

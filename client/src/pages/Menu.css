@@ -47,8 +47,32 @@
   padding: 20px 24px;
   align-items: flex-start;
 }
-.menu-item-card__left { flex-shrink: 0; }
-.menu-item-card__emoji { font-size: 2.4rem; }
+.menu-item-card__img-wrap {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--smoke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-item-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+.menu-item-card__emoji {
+  font-size: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
 .menu-item-card__body { flex: 1; display: flex; flex-direction: column; gap: 12px; }
 .menu-item-card__top {
   display: flex;

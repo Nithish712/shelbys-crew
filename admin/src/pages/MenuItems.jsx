@@ -14,6 +14,7 @@ export default function MenuItems() {
   const [saving, setSaving]   = useState(false)
   const [error, setError]     = useState('')
   const [success, setSuccess] = useState('')
+  const [confirmId, setConfirmId] = useState(null)
 
   const load = useCallback(() => {
     setLoading(true)
@@ -43,9 +44,16 @@ export default function MenuItems() {
   }
 
   const handleDelete = async id => {
-    if (!confirm('Delete this item?')) return
-    try { await adminApi.deleteItem(id); load(); setSuccess('Deleted.'); setTimeout(()=>setSuccess(''),3000) }
-    catch(e) { setError(e.message) }
+    try {
+      await adminApi.deleteItem(id)
+      setConfirmId(null)
+      load()
+      setSuccess('Item deleted!')
+      setTimeout(() => setSuccess(''), 3000)
+    } catch(e) {
+      setConfirmId(null)
+      setError(e.message)
+    }
   }
 
   const f = (field, val) => setForm(p => ({ ...p, [field]: val }))
@@ -91,7 +99,14 @@ export default function MenuItems() {
                     <td>
                       <div className="td-actions">
                         <button className="btn btn-outline btn-sm" onClick={()=>openEdit(item)}>Edit</button>
-                        <button className="btn btn-red btn-sm" onClick={()=>handleDelete(item.id)}>Delete</button>
+                        {confirmId === item.id ? (
+                          <>
+                            <button className="btn btn-red btn-sm" onClick={()=>handleDelete(item.id)}>Confirm?</button>
+                            <button className="btn btn-outline btn-sm" onClick={()=>setConfirmId(null)}>Cancel</button>
+                          </>
+                        ) : (
+                          <button className="btn btn-red btn-sm" onClick={()=>setConfirmId(item.id)}>Delete</button>
+                        )}
                       </div>
                     </td>
                   </tr>
